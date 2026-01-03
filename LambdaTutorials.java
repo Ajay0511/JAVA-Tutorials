@@ -2,6 +2,7 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 
 public class LambdaTutorials {
@@ -86,6 +87,17 @@ public class LambdaTutorials {
         Supplier<Employee> employeeSupplier = () -> new Employee("Ace", 67000);
         Employee newEmp = employeeSupplier.get();
         System.out.println("New Employee: " + newEmp.getName() + ", Salary: " + newEmp.getSalary());
+
+
+        // Function<T, R>
+        // Takes one input of type T
+        // Returns a value of type R
+        // @FunctionalInterface
+        // public interface Function<T, R> {
+        //     R apply(T t);
+        // }
+        Function<String, Integer> length = s -> s.length();
+        System.out.println(length.apply("Java"));
 
     }
 }
