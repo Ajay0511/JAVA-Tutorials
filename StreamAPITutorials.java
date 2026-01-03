@@ -127,6 +127,18 @@ public class StreamAPITutorials {
 
 
 
+        /*
+            * map() vs flatMap()
+                * map():
+                    * Takes one element
+                    * Converts it into exactly one element
+                * flatMap():
+                    * Takes one element
+                    * Converts it into multiple elements (stream)
+                    * Flattens into a single stream
+            */
+
+
 
         
 
