@@ -1,0 +1,185 @@
+❓1. What is multithreading?
+
+Answer:
+Multithreading is a process of executing multiple threads concurrently within a single program to improve performance and responsiveness.
+
+❓2. Difference between Process and Thread?
+Process	Thread
+Heavyweight	Lightweight
+Separate memory	Shared memory
+Slow context switch	Fast
+Independent	Dependent
+❓3. What is the difference between Runnable and Callable?
+Runnable	Callable
+No return value	Returns value
+No exception	Can throw exception
+run()	call()
+❓4. What is thread lifecycle?
+
+States:
+
+NEW
+RUNNABLE
+RUNNING
+BLOCKED / WAITING
+TERMINATED
+⚙️ CORE CONCEPT QUESTIONS
+❓5. What is synchronization?
+
+Answer:
+Synchronization is a mechanism to control access of multiple threads to shared resources to avoid data inconsistency.
+
+❓6. What is a race condition?
+
+Answer:
+When multiple threads access and modify shared data simultaneously, leading to unpredictable results.
+
+❓7. Difference between synchronized and Lock?
+synchronized	Lock
+Implicit	Explicit
+Less flexible	More control
+Auto release	Manual release
+❓8. What is volatile?
+
+Answer:
+Ensures visibility of changes to variables across threads.
+
+volatile boolean flag = true;
+
+👉 Guarantees latest value is read.
+
+🧵 THREAD CONTROL QUESTIONS
+❓9. Difference between sleep() and wait()?
+sleep()	wait()
+Does not release lock	Releases lock
+Thread class	Object class
+❓10. What is join()?
+
+Answer:
+It makes one thread wait until another thread completes.
+
+thread.join();
+🔥 EXECUTOR FRAMEWORK
+❓11. What is ExecutorService?
+
+Answer:
+A framework to manage and control thread execution using thread pools.
+
+❓12. Difference between submit() and execute()?
+execute()	submit()
+No return	Returns Future
+No exception handling	Handles exceptions
+❓13. What is Future?
+
+Answer:
+Represents result of an asynchronous computation.
+
+Future<Integer> future = executor.submit(() -> 10);
+future.get();
+⚡ ADVANCED QUESTIONS
+❓14. What is Deadlock?
+
+Answer:
+A situation where two or more threads are waiting for each other’s resources forever.
+
+❓15. What is Starvation?
+
+Answer:
+A thread does not get CPU time due to higher priority threads.
+
+❓16. What is Livelock?
+
+Answer:
+Threads keep responding but no progress happens.
+
+🚀 MODERN JAVA QUESTIONS
+❓17. What is CompletableFuture?
+
+Answer:
+A non-blocking asynchronous programming feature.
+
+CompletableFuture.supplyAsync(() -> "Hello")
+    .thenApply(s -> s + " World");
+❓18. What are Virtual Threads (Java 21)?
+
+Answer:
+Lightweight threads managed by JVM instead of OS.
+
+Thread.startVirtualThread(() -> {
+    System.out.println("Virtual thread");
+});
+
+👉 Can create millions of threads.
+
+🧪 PRACTICAL CODING QUESTIONS
+❓19. Print numbers using 2 threads alternately
+class AlternatePrint {
+    private static final Object lock = new Object();
+    private static int count = 1;
+
+    public static void main(String[] args) {
+        Runnable task = () -> {
+            while (count <= 10) {
+                synchronized (lock) {
+                    System.out.println(Thread.currentThread().getName() + " " + count++);
+                    lock.notify();
+                    try {
+                        lock.wait();
+                    } catch (InterruptedException e) {}
+                }
+            }
+        };
+
+        new Thread(task, "T1").start();
+        new Thread(task, "T2").start();
+    }
+}
+❓20. Producer-Consumer Problem
+BlockingQueue<Integer> queue = new ArrayBlockingQueue<>(5);
+
+// Producer
+new Thread(() -> {
+    try {
+        for (int i = 0; i < 10; i++) {
+            queue.put(i);
+            System.out.println("Produced: " + i);
+        }
+    } catch (Exception e) {}
+}).start();
+
+// Consumer
+new Thread(() -> {
+    try {
+        while (true) {
+            System.out.println("Consumed: " + queue.take());
+        }
+    } catch (Exception e) {}
+}).start();
+🏭 PRODUCTION QUESTIONS
+❓21. How to design a thread-safe class?
+
+Answer:
+
+Use immutability
+Use synchronization
+Use atomic variables
+❓22. How to avoid deadlocks?
+Lock ordering
+Timeout locks
+Avoid nested locks
+❓23. How to optimize performance?
+Use thread pools
+Avoid blocking
+Use async programming
+Reduce shared state
+🎯 MOST ASKED INTERVIEW QUESTIONS
+
+If you remember only these, you're safe:
+
+Runnable vs Callable
+synchronized vs Lock
+sleep vs wait
+ExecutorService
+Deadlock
+CompletableFuture
+Virtual Threads
